@@ -33,7 +33,6 @@ function! Delete_surround_tag(start,end,tag_end)
     call setpos(".", pos)
 
     call searchpair(a:start,'', a:end, '')
-    "this is becaus pos is </| after % for html
 
     let c = getpos(".")
     call search (a:tag_end, 'e')
