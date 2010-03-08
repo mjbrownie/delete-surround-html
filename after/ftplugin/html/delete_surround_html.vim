@@ -6,43 +6,19 @@
 " mapping. It will let you delete the surrounding tag of a specified type
 " rather than just the immediate tag.
 "
-if exists("loaded_matchit")
-    let b:match_ignorecase = 1
-    let b:match_skip = 's:Comment'
-    let s:match_words = '<:>,' .
-    \ '<\@<=[ou]l\>[^>]*\%(>\|$\):<\@<=li\>:<\@<=/[ou]l>,' .
-    \ '<\@<=dl\>[^>]*\%(>\|$\):<\@<=d[td]\>:<\@<=/dl>,' .
-    \ '<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>,'  . 
-    \ '{% *if .*%}:{% *else *%}:{% *endif *%},' . 
-    \ '{% *ifequal .*%}:{% *else *%}:{% *endifequal *%},' . 
-    \ '{% *ifnotequal .*%}:{% *else *%}:{% *endifnotequal *%},' . 
-    \ '{% *ifchanged .*%}:{% *else *%}:{% *endifchanged *%},' . 
-    \ '{% *for .*%}:{% *endfor *%},' . 
-    \ '{% *with .*%}:{% *endwith *%},' .
-    \ '{% *comment .*%}:{% *endcomment *%},' .
-    \ '{% *block .*%}:{% *endblock *%},' .
-    \ '{% *filter .*%}:{% *endfilter *%},' .
-    \ '{% *spaceless .*%}:{% *endspaceless *%}' 
-else
-    finish
-endif
 function! Delete_surround_html(type)
-    call Delete_surround_tag('<'.a:type.'[ >]', '</' . a:type .  '>', '>',1)
-    let b:match_words = s:match_words
+    call Delete_surround_tag('<'.a:type.'[ >]', '</' . a:type .  '>', '>')
 endfunction
 
 function! Delete_surround_django(type)
-    call Delete_surround_tag('{% *'.a:type.' .*%}','{% *end'.a:type. ' *%}','}', 0)
+    call Delete_surround_tag('{% *'.a:type.' .*%}','{% *end'.a:type. ' *%}','}')
 endfunction
 
 function! Delete_surround_django_if()
     call Delete_surround_django('if\(equal\|notequal\|changed\|\)')
 endfunction
 
-function! Delete_surround_tag(start,end,tag_end,boffsetnorm)
-
-    let temp_match = b:match_words
-    let b:match_words = s:match_words
+function! Delete_surround_tag(start,end,tag_end)
 
     let pos = getpos(".")
 
@@ -76,9 +52,6 @@ function! Delete_surround_tag(start,end,tag_end,boffsetnorm)
     exec 'norm df' . a:tag_end
 
     call setpos(".", pos)
-
-    let b:match_words = s:match_words
-
 endfunction
 
 nnoremap dshu :call Delete_surround_html('ul')<cr>
