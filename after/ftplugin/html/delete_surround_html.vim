@@ -53,37 +53,64 @@ function! Delete_surround_tag(start,end,tag_end)
     call setpos(".", pos)
 endfunction
 
-nnoremap dshu :call Delete_surround_html('ul')<cr>
-nnoremap dshl :call Delete_surround_html('li')<cr>
-nnoremap dshd :call Delete_surround_html('div')<cr>
-nnoremap dshs :call Delete_surround_html('span')<cr>
-nnoremap dshu :call Delete_surround_html('ul')<cr>
-nnoremap dshf :call Delete_surround_html('form')<cr>
-nnoremap dshs :call Delete_surround_html('span')<cr>
-nnoremap dsht :call Delete_surround_html('table')<cr>
-nnoremap dshr :call Delete_surround_html('tr')<cr>
-nnoremap dshc :call Delete_surround_html('td')<cr>
-nnoremap dshp :call Delete_surround_html('p')<cr>
+
+let g:delete_surround_django_{char2nr("b")} = 'block'
+let g:delete_surround_django_{char2nr("c")} = 'comment'
+let g:delete_surround_django_{char2nr("i")} = 'if\(equal\|notequal\|changed\|\)'
+let g:delete_surround_django_{char2nr("w")} = 'with'
+let g:delete_surround_django_{char2nr("f")} = 'for'
+
+let g:delete_surround_html_{char2nr("u")} ='ul'
+let g:delete_surround_html_{char2nr("l")} ='li'
+let g:delete_surround_html_{char2nr("d")} ='div'
+let g:delete_surround_html_{char2nr("s")} ='span'
+let g:delete_surround_html_{char2nr("u")} ='ul'
+let g:delete_surround_html_{char2nr("f")} ='form'
+let g:delete_surround_html_{char2nr("s")} ='span'
+let g:delete_surround_html_{char2nr("t")} ='table'
+let g:delete_surround_html_{char2nr("r")} ='tr'
+let g:delete_surround_html_{char2nr("c")} ='td'
+let g:delete_surround_html_{char2nr("p")} ='p'
+
+function! Delete_surround_dj()
+    echo "delete - surround - django - (b)lock / (c)omment / (i)f* / (w)ith / (f)or :"
+    let c = getchar()
+
+    try
+        call Delete_surround_django(g:delete_surround_django_{c})
+    finally 
+        return ''
+    endtry
+endfunction
+
+function! Delete_surround_ht()
+    echo "delete - surround - html - (u)l / (l)i / (d)iv / (s)pan / (f)orm / (t)able / t(r) / (c)td / (p):"
+    let c = getchar()
+    try
+        call Delete_surround_html(g:delete_surround_html_{c})
+    finally 
+        return ''
+    endtry
+endfunction
+
+nnoremap dsd :call Delete_surround_dj()<cr>
+nnoremap dsh :call Delete_surround_ht()<cr>
 
 
-nnoremap dsdb :call Delete_surround_django('block')<cr>
-nnoremap dsdc :call Delete_surround_django('comment')<cr>
-nnoremap dsdi :call Delete_surround_django_if()<cr>
-nnoremap dsdw :call Delete_surround_django('with')<cr>
-
-nnoremap dshu :call Delete_surround_html('ul')<cr>
-nnoremap dshl :call Delete_surround_html('li')<cr>
-nnoremap dshd :call Delete_surround_html('div')<cr>
-nnoremap dshs :call Delete_surround_html('span')<cr>
-nnoremap dshu :call Delete_surround_html('ul')<cr>
-nnoremap dshf :call Delete_surround_html('form')<cr>
-nnoremap dshs :call Delete_surround_html('span')<cr>
-nnoremap dsht :call Delete_surround_html('table')<cr>
-nnoremap dshr :call Delete_surround_html('tr')<cr>
-nnoremap dshc :call Delete_surround_html('td')<cr>
+"nnoremap dshu :call Delete_surround_html('ul')<cr>
+"nnoremap dshl :call Delete_surround_html('li')<cr>
+"nnoremap dshd :call Delete_surround_html('div')<cr>
+"nnoremap dshs :call Delete_surround_html('span')<cr>
+"nnoremap dshu :call Delete_surround_html('ul')<cr>
+"nnoremap dshf :call Delete_surround_html('form')<cr>
+"nnoremap dshs :call Delete_surround_html('span')<cr>
+"nnoremap dsht :call Delete_surround_html('table')<cr>
+"nnoremap dshr :call Delete_surround_html('tr')<cr>
+"nnoremap dshc :call Delete_surround_html('td')<cr>
+"nnoremap dshp :call Delete_surround_html('p')<cr>
 
 
-nnoremap dsdb :call Delete_surround_django('block')<cr>
-nnoremap dsdc :call Delete_surround_django('comment')<cr>
-nnoremap dsdi :call Delete_surround_django_if()<cr>
-nnoremap dsdw :call Delete_surround_django('with')<cr>
+"nnoremap dsdb :call Delete_surround_django('block')<cr>
+"nnoremap dsdc :call Delete_surround_django('comment')<cr>
+"nnoremap dsdi :call Delete_surround_django_if()<cr>
+"nnoremap dsdw :call Delete_surround_django('with')<cr>
