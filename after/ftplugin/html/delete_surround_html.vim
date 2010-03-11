@@ -93,8 +93,8 @@ function! Delete_surround_ht()
     endtry
 endfunction
 
-nnoremap dsd :call Delete_surround_dj()<cr>
-nnoremap dsh :call Delete_surround_ht()<cr>
+nnoremap <buffer> dsd :call Delete_surround_dj()<cr>
+nnoremap <buffer> dsh :call Delete_surround_ht()<cr>
 
 
 "nnoremap dshu :call Delete_surround_html('ul')<cr>
